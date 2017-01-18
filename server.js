@@ -68,9 +68,14 @@ const
   };
 
   app.get('/restaurants/:location' , (req, res) => {
-    request_yelp({term:'food', location:req.params.location}, function(error, response, body){
+    request_yelp({term:'happy+hour', location:req.params.location}, function(error, response, body){
       //console.log(error, response, body);
-      res.json(JSON.parse(body))
+      var businesses = JSON.parse(body).businesses
+      var businessesJustTheGoodStuff = businesses.map((b) => {
+        return {name: b.name, id: b.id, rating: b.rating, location: b.location}
+      })
+      res.json(businesses)
+      // res.json(businessesJustTheGoodStuff)
     })
 
   })
