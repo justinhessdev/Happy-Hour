@@ -1,0 +1,29 @@
+{
+  "name": "happy-hour",
+  "version": "1.0.0",
+  "description": "yay!!!",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "dotenv": "^4.0.0",
+    "express": "^4.14.0",
+    "mongoose": "^4.7.7",
+    "morgan": "^1.7.0",
+    "passport": "^0.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanallenlewis/Happy-Hour.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seanallenlewis/Happy-Hour/issues"
+  },
+  "homepage": "https://github.com/seanallenlewis/Happy-Hour#readme"
+}
