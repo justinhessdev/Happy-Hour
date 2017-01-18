@@ -1,6 +1,7 @@
 const
   dotenv = require('dotenv').load({silent: true}),
   express = require('express'),
+  mongoose = require('mongoose'),
   request = require('request'),
   bodyParser = require('body-parser'),
   oauthSignature = require('oauth-signature'),
@@ -26,14 +27,14 @@ const
 
     /* We can setup default parameters here */
     var default_parameters = {
-      location: 'San+Francisco',
+      location: 'Santa+Monica',
       sort: '2'
     };
 
     /* We set the require parameters here */
     var required_parameters = {
-      oauth_consumer_key :'P6Yc3unbPEtA9s1ThtBxUQ', // process.env.oauth_consumer_key,
-      oauth_token : 's6Mun8nEr1zJ0GfeYx5FMRsmdMifW1HV', //process.env.oauth_token,
+      oauth_consumer_key : process.env.OAUTH_CONSUMER_KEY,
+      oauth_token : process.env.oauth_token,
       oauth_nonce : n(),
       oauth_timestamp : n().toString().substr(0,10),
       oauth_signature_method : 'HMAC-SHA1',
@@ -44,8 +45,8 @@ const
     var parameters = _.assign(default_parameters, set_parameters, required_parameters);
 
     /* We set our secrets here */
-    var consumerSecret = 'Xmk63rKGgR5HAUz6j2vckwE27aE'//process.env.consumerSecret;
-    var tokenSecret = 'gJkVI8VYYtP97nfy5ujGFTfthYE'// process.env.tokenSecret;
+    var consumerSecret = process.env.consumerSecret;
+    var tokenSecret = process.env.tokenSecret;
 
     /* Then we call Yelp's Oauth 1.0a server, and it returns a signature */
     /* Note: This signature is only good for 300 seconds after the oauth_timestamp */
