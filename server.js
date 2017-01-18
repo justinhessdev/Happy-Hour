@@ -2,6 +2,8 @@ const
   dotenv = require('dotenv').load({silent: true}),
   express = require('express'),
   request = require('request'),
+  ejs = require('ejs'),
+  ejsLayouts = require('express-ejs-layouts'),
   bodyParser = require('body-parser'),
   oauthSignature = require('oauth-signature'),
   n = require('nonce')(),
@@ -71,11 +73,17 @@ const
       //console.log(error, response, body);
       res.json(JSON.parse(body))
     })
-
   })
 
+  // ejs configuration
+  app.set('view engine', 'ejs')
+    // app.use(ejsLayouts)
 
+  //root route
+  app.get('/', (req, res) => {
+  	res.render('pages/home')
+  })
 
-app.listen(port, (err) => {
-  console.log (err || "Server Runnign On Port " + port)
-})
+  app.listen(port, (err) => {
+    console.log (err || "Server Runnign On Port " + port)
+  })
