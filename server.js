@@ -3,6 +3,8 @@ const
   express = require('express'),
   mongoose = require('mongoose'),
   request = require('request'),
+  ejs = require('ejs'),
+  ejsLayouts = require('express-ejs-layouts'),
   bodyParser = require('body-parser'),
   oauthSignature = require('oauth-signature'),
   n = require('nonce')(),
@@ -77,11 +79,17 @@ const
       res.json(businesses)
       // res.json(businessesJustTheGoodStuff)
     })
-
   })
 
+  // ejs configuration
+  app.set('view engine', 'ejs')
+    // app.use(ejsLayouts)
 
+  //root route
+  app.get('/', (req, res) => {
+  	res.render('pages/home')
+  })
 
-app.listen(port, (err) => {
-  console.log (err || "Server Runnign On Port " + port)
-})
+  app.listen(port, (err) => {
+    console.log (err || "Server Runnign On Port " + port)
+  })

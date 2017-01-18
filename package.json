@@ -6,7 +6,10 @@
   "dependencies": {
     "body-parser": "^1.16.0",
     "dotenv": "^4.0.0",
+    "ejs": "^2.5.5",
+    "ejs-layouts": "0.0.1",
     "express": "^4.14.0",
+    "express-ejs-layouts": "^2.2.0",
     "mongoose": "^4.7.7",
     "morgan": "^1.7.0",
     "nonce": "^1.0.4",
