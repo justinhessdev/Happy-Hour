@@ -2,7 +2,8 @@
 <div class="container">
   <ul>
     <% businesses.forEach((p) => { %>
-        <li><%= p.name %> </li>
+      <%console.log(p.id)%>
+        <li><a href="/show/<%= p.id %>"><%= p.name %></a> </li>
     <% }) %>
   </ul>
 </div>
