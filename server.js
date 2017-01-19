@@ -17,6 +17,7 @@ const
   n = require('nonce')(),
   qs = require('querystring'),
   _ = require('lodash'),
+  postRoutes = require('./routes/posts.js'),
   port  = (process.env.PORT || 3000),
 
     // environment port
@@ -51,7 +52,7 @@ const
   }))
   app.use(passport.initialize())
   app.use(passport.session())
- 
+
 
 
    var yelp = new Yelp({
@@ -80,12 +81,11 @@ const
 
   // // currentUser:
   app.use((req, res, next) => {
-	app.locals.currentUser = req.user
-	app.locals.loggedIn = !!req.user
-
-	next()
+  	app.locals.currentUser = req.user
+  	app.locals.loggedIn = !!req.user
+  	next()
   })
-  //
+
   // ejs configuration
   app.set('view engine', 'ejs')
   app.use(ejsLayouts)
@@ -96,15 +96,15 @@ const
   })
 
 
-  app.get('/show/:id', (req, res) => {
+  app.get('/business/:id', (req, res) => {
     yelp.business(req.params.id, function(err, data){
       if (err) return console.log(error);
       console.log(data);
-      res.render('pages/show', {biz: data})
+      res.render('pages/business', {biz: data})
     });
   })
 
-
+  app.use('/posts', postRoutes)
 
   app.listen(port, (err) => {
     console.log (err || "Server Running On Port " + port)
