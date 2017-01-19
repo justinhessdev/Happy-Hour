@@ -69,16 +69,20 @@ const
     });
   };
 
-  app.get('/restaurants/:location' , (req, res) => {
-    request_yelp({term:'happy+hour', location:req.params.location}, function(error, response, body){
-      //console.log(error, response, body);
+  app.get('/search' , (req, res) => {
+    if (req.query.location){
+    request_yelp({term:'happy+hour', location:req.query.location}, function(error, response, body){
+      console.log(body);
       var businesses = JSON.parse(body).businesses
       var businessesJustTheGoodStuff = businesses.map((b) => {
         return {name: b.name, id: b.id, rating: b.rating, location: b.location}
       })
-      res.json(businesses)
+      // res.json(businesses)
+      res.render('pages/search', {businesses: businessesJustTheGoodStuff})
       // res.json(businessesJustTheGoodStuff)
-    })
+    })} else {
+      res.redirect('/')
+    }
   })
 
   // ejs configuration
@@ -90,6 +94,10 @@ const
   	res.render('pages/home')
   })
 
+  // app.get('/search', (req, res) => {
+  //   res.render('pages/search')
+  // })
+
   app.listen(port, (err) => {
-    console.log (err || "Server Runnign On Port " + port)
+    console.log (err || "Server Running On Port " + port)
   })
