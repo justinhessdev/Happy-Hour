@@ -1,13 +1,9 @@
+
 <h1>Search Page</h1>
 <div class="container">
   <ul>
     <% businesses.forEach((p) => { %>
-<<<<<<< HEAD
-        <li><%= p.name %> </li>
-=======
-      <%console.log(p.id)%>
         <li><a href="/show/<%= p.id %>"><%= p.name %></a> </li>
->>>>>>> 5d7a63a5169a124e1925a291b2ef5dad26727292
     <% }) %>
   </ul>
 </div>
