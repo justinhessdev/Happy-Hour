@@ -9,6 +9,7 @@ const
   MongoDBStore = require('connect-mongodb-session')(session),
   passport = require('passport')
   request = require('request'),
+  Yelp = require('yelp'),
   ejs = require('ejs'),
   ejsLayouts = require('express-ejs-layouts'),
   bodyParser = require('body-parser'),
@@ -37,6 +38,7 @@ const store = new MongoDBStore({
 
   //middleware
   app = express()
+<<<<<<< HEAD
   app.use(express.static(__dirname + '/public'))
   app.use(logger('dev'))
   app.use(cookieParser())
@@ -58,10 +60,11 @@ const store = new MongoDBStore({
    * callback: callback(error, response, body)
    */
   var request_yelp = function(set_parameters, callback) {
+=======
+>>>>>>> 5d7a63a5169a124e1925a291b2ef5dad26727292
 
-    /* The type of request */
-    var httpMethod = 'GET';
 
+<<<<<<< HEAD
     /* The url we are using for the request */
     var url = 'http://api.yelp.com/v2/search';
 
@@ -119,6 +122,26 @@ const store = new MongoDBStore({
       res.render('pages/search', {businesses: businessesJustTheGoodStuff})
       // res.json(businessesJustTheGoodStuff)
     })} else {
+=======
+   var yelp = new Yelp({
+  consumer_key: process.env.OAUTH_CONSUMER_KEY,
+  consumer_secret: process.env.consumerSecret,
+  token: process.env.oauth_token,
+  token_secret: process.env.tokenSecret,
+  });
+
+  app.get('/search' , (req, res) => {
+    if (req.query.location){
+    yelp.search({term:'happy+hour', location:req.query.location})
+    .then(function(data){
+     var businesses = data.businesses
+     var businessesJustTheGoodStuff = businesses.map((b) => {
+     return {name: b.name, id: b.id, rating: b.rating, location: b.location}
+     })
+     res.render('pages/search', {businesses: businessesJustTheGoodStuff})
+    })
+  } else {
+>>>>>>> 5d7a63a5169a124e1925a291b2ef5dad26727292
       res.redirect('/')
     }
   })
@@ -141,9 +164,21 @@ const store = new MongoDBStore({
   	res.render('pages/home')
   })
 
+<<<<<<< HEAD
   // app.get('/search', (req, res) => {
   //   res.render('pages/search')
   // })
+=======
+  app.get('/show/:id', (req, res) => {
+    yelp.business(req.params.id, function(err, data){
+      if (err) return console.log(error);
+      console.log(data);
+      res.render('pages/show', {biz: data})
+    });
+  })
+
+
+>>>>>>> 5d7a63a5169a124e1925a291b2ef5dad26727292
 
   app.listen(port, (err) => {
     console.log (err || "Server Running On Port " + port)
