@@ -20,8 +20,10 @@ const
   postRoutes = require('./routes/posts.js'),
   port  = (process.env.PORT || 3000),
 
+
     // environment port
     mongoConnectionString = process.env.MONGODB_URL || 'mongodb://localhost/passport-authentication'
+
 
     // mongoose connection
     mongoose.connect(mongoConnectionString, (err) => {
@@ -52,7 +54,6 @@ const
   }))
   app.use(passport.initialize())
   app.use(passport.session())
-
 
 
    var yelp = new Yelp({
@@ -96,6 +97,7 @@ const
   })
 
 
+
   app.get('/business/:id', (req, res) => {
     yelp.business(req.params.id, function(err, data){
       if (err) return console.log(error);
@@ -105,6 +107,7 @@ const
   })
 
   app.use('/posts', postRoutes)
+
 
   app.listen(port, (err) => {
     console.log (err || "Server Running On Port " + port)
