@@ -3,7 +3,10 @@
 <div class="container">
   <ul>
     <% businesses.forEach((p) => { %>
-        <li><a href="/show/<%= p.id %>"><%= p.name %></a> </li>
+
+      <%console.log(p.id)%>
+        <li><a href="/business/<%= p.id %>"><%= p.name %></a> </li>
+        
     <% }) %>
   </ul>
 </div>

@@ -17,12 +17,13 @@ const
   n = require('nonce')(),
   qs = require('querystring'),
   _ = require('lodash'),
+  postRoutes = require('./routes/posts.js'),
   port  = (process.env.PORT || 3000),
 
 
-// //   // environment port
+    // environment port
+    mongoConnectionString = process.env.MONGODB_URL || 'mongodb://localhost/passport-authentication'
 
-  mongoConnectionString = process.env.MONGODB_URL || 'mongodb://localhost/passport-authentication'
 
     // mongoose connection
     mongoose.connect(mongoConnectionString, (err) => {
@@ -30,13 +31,14 @@ const
     })
 
     // will store session information as a 'sessions' collection in Mongo
-const store = new MongoDBStore({
+  const store = new MongoDBStore({
   uri: mongoConnectionString,
   collection: 'sessions'
     });
 
   //middleware
   app = express()
+
   app.use(express.static(__dirname + '/public'))
   app.use(logger('dev'))
   app.use(cookieParser())
@@ -72,6 +74,7 @@ const store = new MongoDBStore({
      res.render('pages/search', {businesses: businessesJustTheGoodStuff})
     })
   } else {
+
       res.redirect('/')
     }
   })
@@ -79,12 +82,11 @@ const store = new MongoDBStore({
 
   // // currentUser:
   app.use((req, res, next) => {
-	app.locals.currentUser = req.user
-	app.locals.loggedIn = !!req.user
-
-	next()
+  	app.locals.currentUser = req.user
+  	app.locals.loggedIn = !!req.user
+  	next()
   })
-  //
+
   // ejs configuration
   app.set('view engine', 'ejs')
   app.use(ejsLayouts)
@@ -95,13 +97,16 @@ const store = new MongoDBStore({
   })
 
 
-  app.get('/show/:id', (req, res) => {
+
+  app.get('/business/:id', (req, res) => {
     yelp.business(req.params.id, function(err, data){
       if (err) return console.log(error);
       console.log(data);
-      res.render('pages/show', {biz: data})
+      res.render('pages/business', {biz: data})
     });
   })
+
+  app.use('/posts', postRoutes)
 
 
   app.listen(port, (err) => {

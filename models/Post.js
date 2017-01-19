@@ -2,10 +2,11 @@
 const
   mongoose = require('mongoose'),
   postSchema = new mongoose.Schema({
-    id: {type: String},
-    time: {type: String},
-    body: {type: String},
-    specials: {type: String}
+    business_id: {type: String},
+    times: {type: String},
+    description: {type: String},
+    specials: {type: String},
+    neighborhood: {type: String}
   }, {timestamps: true})
 
 module.exports = mongoose.model('Post', postSchema)
