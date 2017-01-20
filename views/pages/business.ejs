@@ -45,7 +45,28 @@
     </div>
   </div>
 </div>
+<% } else { %>
+  <h3>You must be <a href="/login">logged in</a> to write a review.</h3>
+<% } %>
 
+<div class="container">
+  <div class="happy-hours-list">
+    <div id="review-template" class="row review">
+      <div class="col-sm-8">
+        <div class="panel panel-white post panel-shadow" style="background-color:#c7c7c7">
+          <div class="post-heading">
+            <h4 class="author"><span id="name"></span>'s Review:</h4>
+            <p class="description"><span id='description'></span></p>
+            <h4 class="times">Happy Hour Times: <span id="times"></span></h4>
+            <h4 class="specials">Recommended Specials: <span id="specials"></span></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if(loggedIn) { %>
 <script type="text/javascript">
 $('#happy-hour-button').on('click', function(evt) {
   console.log('clickeddddd');
@@ -63,39 +84,28 @@ $('#happy-hour-button').on('click', function(evt) {
 
    })
   }).done(function(post) {
-    //  console.log(post)
-    // $('#happy-hours-list').append(post.description)
-    var newReview = '<div class="row"><div class="col-sm-8"><div class="panel panel-white post panel-shadow" style="background-color:#c7c7c7"><div class="post-heading"><p class="product-description"><h4>Review by: ' + post._author.local.name + '</h4>' + post.description + '</p><h4 class="times">Happy Hour Times: <span>' + post.times + '</span></h4><h4 class="specials">Recommended Specials: <span>' + post.specials + '</strong></h4></div></div></div></div>'
-    console.log(newReview)
-
-    $('.happy-hours-list').prepend(newReview)
+    appendReview(post._author.local.name, post.description, post.times, post.specials)
     $('#review-modal').modal('hide')
   })
 
-})
 
+
+})
+function appendReview(name, description, times, specials) {
+  console.log("Cloning and prepending...")
+  var $newReview = $('#review-template').clone()
+  $newReview.attr('id', '')
+  $newReview.find('#name').text(name)
+  $newReview.find('#description').text(description)
+  $newReview.find('#times').text(times)
+  $newReview.find('#specials').text(specials)
+  console.log($newReview)
+  $('.happy-hours-list').prepend($newReview)
+}
+
+<% posts.reverse().forEach((post) => {%>
+  appendReview("<%= post._author.local.name %>", "<%= post.description %>", "<%= post.times %>", "<%= post.specials %>")
+<% }) %>
 
 </script>
-<% } else { %>
-  <h3>You must be <a href="/login">logged in</a> to write a review.</h3>
 <% } %>
-
-<div class="container">
-  <div class="happy-hours-list">
-
-    <% posts.reverse().forEach((post) => {%>
-    <div class="row">
-      <div class="col-sm-8">
-        <div class="panel panel-white post panel-shadow" style="background-color:#c7c7c7">
-          <div class="post-heading">
-            <p class="product-description"><h4><%= post._author.local.name%>'s Review:</h4> <%= post.description %></p>
-            <h4 class="times">Happy Hour Times: <span><%= post.times %></span></h4>
-            <h4 class="specials">Recommended Specials: <span><%= post.specials %></strong></h4>
-          </div>
-        </div>
-      </div>
-    </div>
-    <% }) %>
-
-  </div>
-</div>
