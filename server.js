@@ -41,7 +41,8 @@ const
 
   //middleware
   app = express()
-
+  app.set('view engine', 'ejs')
+  app.use(ejsLayouts)
   app.use(express.static(__dirname + '/public'))
   app.use(logger('dev'))
   app.use(cookieParser())
@@ -95,9 +96,8 @@ const
   	next()
   })
 
-  // ejs configuration
-  app.set('view engine', 'ejs')
-  app.use(ejsLayouts)
+
+
 
   //root route
   app.get('/', (req, res) => {

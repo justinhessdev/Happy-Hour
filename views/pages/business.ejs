@@ -1,3 +1,4 @@
+
 <h1>HappyHour show page</h1>
 <div class="container">
   <h3>Name: <%= biz.name %></h3>
@@ -6,10 +7,27 @@
   <h4>City: <%= biz.location.city %></h4>
 </div>
 
-<div id="happy-hours-list">
-  <% posts.forEach((post) => {%>
-   <h1><%= post.description %></h1>
+<!-- <div class="container">
+ <div id="happy-hours-list"> -->
+
+    <div class="container">
+		<div class="happy-hours-list">
+      <% posts.forEach((post) => {%>
+        <div class="row">
+          <div class="col-sm-8">
+              <div class="panel panel-white post panel-shadow" style="background-color:#c7c7c7">
+                  <div class="post-heading">
+              <!-- <h3 class="product-title">men's shoes fashion</h3> -->
+              <p class="product-description"><h4>*username*'s Review:</h4> <%= post.description %></p>
+              <h4 class="times">Happy Hour Times: <span><%= post.times %></span></h4>
+              <h4 class="specials">Recommended Specials: <span><%= post.specials %></strong></h4>
+            </div>
+          </div>
+        </div>
+      </div>
+            <!-- <h1><%= post.description %></h1> -->
    <% }) %>
+ </div>
 </div>
 
 <div class="container">
@@ -35,10 +53,11 @@ $('#happy-hour-button').on('click', function(evt) {
      times: $("textarea[name='times']").val(),
      specials: $("textarea[name='specials']").val(),
      neighborhood: "<%= biz.location.city%>"
+
    })
   }).done(function(post) {
-     console.log(post)
-    $('#happy-hours-list').append('<h1>' + post.description + '</h1>')
+    //  console.log(post)
+    // $('#happy-hours-list').append(post.description)
   })
 })
 </script>
