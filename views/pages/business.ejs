@@ -18,10 +18,7 @@
               <div class="panel panel-white post panel-shadow" style="background-color:#c7c7c7">
                   <div class="post-heading">
               <!-- <h3 class="product-title">men's shoes fashion</h3> -->
-
-              <p class="product-description">
-                <h4><%= post._author.local.name%>'s Review:</h4>
-                <%= post.description %></p>
+              <p class="product-description"><h4>*username*'s Review:</h4> <%= post.description %></p>
               <h4 class="times">Happy Hour Times: <span><%= post.times %></span></h4>
               <h4 class="specials">Recommended Specials: <span><%= post.specials %></strong></h4>
             </div>
@@ -32,7 +29,7 @@
    <% }) %>
  </div>
 </div>
-
+<% if(loggedIn) { %>
 <div class="container">
     <textarea class="form-control" rows="2" name="description" placeholder="Add a description"></textarea>
     <textarea class="form-control" rows="2" name="times" placeholder="Add a time"></textarea>
@@ -60,11 +57,16 @@ $('#happy-hour-button').on('click', function(evt) {
    })
   }).done(function(post) {
     //  console.log(post)
-    // $('#happy-hours-list').prepend(post)
+    // $('#happy-hours-list').append(post.description)
   })
-})
-</script>
 
+})
+
+
+</script>
+<% } else { %>
+  <h3>You must be <a href="/login">logged in</a> to write a review.</h3>
+<% } %>
 
 <!-- test -->
 
