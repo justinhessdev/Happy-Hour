@@ -35,7 +35,6 @@ $('#happy-hour-button').on('click', function(evt) {
      times: $("textarea[name='times']").val(),
      specials: $("textarea[name='specials']").val(),
      neighborhood: "<%= biz.location.city%>"
-
    })
   }).done(function(post) {
      console.log(post)

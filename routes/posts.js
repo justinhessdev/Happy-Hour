@@ -20,11 +20,11 @@ const
     Post.find(theFilter, (err, posts) => {
       res.json(posts)})
     })
-  .post((req, res) => {
-    Post.create(req.body, (err, post) => {
-      res.json(post)
+   .post((req, res) => {
+      var newPost = new Post(req.body)
+      newPost._author = req._author = req.user
+      newPost.save((err, post) => res.json(post))
     })
-  })
 
   postRouter.route('/:id')
   .delete((req, res) => {
