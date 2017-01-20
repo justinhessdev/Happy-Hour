@@ -8,20 +8,20 @@ const
 userRouter.route('/login')
   .get((req, res) => res.render('login', {message: req.flash('loginMessage')}))
   .post(passport.authenticate('local-login', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/login'
   }))
 
 userRouter.route('/signup')
   .get((req, res) => res.render('signup', {message: req.flash('signupMessage')}))
   .post(passport.authenticate('local-signup', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/signup'
   }))
 
-userRouter.get('/profile', isLoggedIn, (req, res) => {
-  res.render('users/show', {user: req.user})
-})
+// userRouter.get('/profile', isLoggedIn, (req, res) => {
+//   res.redirect('../views/pages/home', {user: req.user})
+// })
 
 userRouter.get('/logout', (req, res) => {
   req.logout()
