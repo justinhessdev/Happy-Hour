@@ -6,8 +6,13 @@ const
       name: String,
       email: String,
       password: String
-    }
+    },
+    posts: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}]
   })
+
+userSchema.pre('findOne', function() {
+  this.populate('posts')
+})
 
 userSchema.methods.generateHash = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
