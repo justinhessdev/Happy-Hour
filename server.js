@@ -18,6 +18,7 @@ const
   qs = require('querystring'),
   _ = require('lodash'),
   postRoutes = require('./routes/posts.js'),
+  userRoutes = require('./routes/users.js'),
   port  = (process.env.PORT || 3000),
   Post = require('./models/Post.js')
 
@@ -110,6 +111,8 @@ const
   })
 
   app.use('/posts', postRoutes)
+  app.use('/', userRoutes)
+
 
 
   app.listen(port, (err) => {
