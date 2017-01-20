@@ -7,7 +7,8 @@ const
   cookieParser = require('cookie-parser'),
   session = require('express-session'),
   MongoDBStore = require('connect-mongodb-session')(session),
-  passport = require('passport')
+  passport = require('passport'),
+  passportConfig = require('./config/passport.js'),
   request = require('request'),
   Yelp = require('yelp'),
   ejs = require('ejs'),
