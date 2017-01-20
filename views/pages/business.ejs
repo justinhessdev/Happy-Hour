@@ -10,34 +10,41 @@
 <!-- <div class="container">
  <div id="happy-hours-list"> -->
 
-    <div class="container">
-		<div class="happy-hours-list">
-      <% posts.forEach((post) => {%>
-        <div class="row">
-          <div class="col-sm-8">
-              <div class="panel panel-white post panel-shadow" style="background-color:#c7c7c7">
-                  <div class="post-heading">
-              <!-- <h3 class="product-title">men's shoes fashion</h3> -->
-              <p class="product-description"><h4>*username*'s Review:</h4> <%= post.description %></p>
-              <h4 class="times">Happy Hour Times: <span><%= post.times %></span></h4>
-              <h4 class="specials">Recommended Specials: <span><%= post.specials %></strong></h4>
-            </div>
-          </div>
-        </div>
-      </div>
-            <!-- <h1><%= post.description %></h1> -->
-   <% }) %>
- </div>
-</div>
+
 <% if(loggedIn) { %>
-<div class="container">
+<!-- <div class="container">
     <textarea class="form-control" rows="2" name="description" placeholder="Add a description"></textarea>
     <textarea class="form-control" rows="2" name="times" placeholder="Add a time"></textarea>
     <textarea class="form-control" rows="2" name="specials" placeholder="Add specials"></textarea>
 
  <button id="happy-hour-button" class="btn btn-primary">Submit</button>
-</div>
+</div> -->
 
+<div class="container">
+  <div style="margin-bottom:10px;">
+  <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#review-modal">Review Happy Hour</button>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="review-modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Review</h4>
+        </div>
+        <div class="modal-body" id="happy-hours-list">
+          <textarea class="form-control" rows="2" name="description" placeholder="Add a description"></textarea>
+          <textarea class="form-control" rows="2" name="times" placeholder="Add a time"></textarea>
+          <textarea class="form-control" rows="2" name="specials" placeholder="Add specials"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button id="happy-hour-button" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script type="text/javascript">
 $('#happy-hour-button').on('click', function(evt) {
@@ -58,6 +65,11 @@ $('#happy-hour-button').on('click', function(evt) {
   }).done(function(post) {
     //  console.log(post)
     // $('#happy-hours-list').append(post.description)
+    var newReview = '<div class="row"><div class="col-sm-8"><div class="panel panel-white post panel-shadow" style="background-color:#c7c7c7"><div class="post-heading"><p class="product-description"><h4>Review by: ' + post._author.local.name + '</h4>' + post.description + '</p><h4 class="times">Happy Hour Times: <span>' + post.times + '</span></h4><h4 class="specials">Recommended Specials: <span>' + post.specials + '</strong></h4></div></div></div></div>'
+    console.log(newReview)
+
+    $('.happy-hours-list').prepend(newReview)
+    $('#review-modal').modal('hide')
   })
 
 })
@@ -68,7 +80,22 @@ $('#happy-hour-button').on('click', function(evt) {
   <h3>You must be <a href="/login">logged in</a> to write a review.</h3>
 <% } %>
 
-<!-- test -->
+<div class="container">
+  <div class="happy-hours-list">
 
+    <% posts.reverse().forEach((post) => {%>
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="panel panel-white post panel-shadow" style="background-color:#c7c7c7">
+          <div class="post-heading">
+            <p class="product-description"><h4><%= post._author.local.name%>'s Review:</h4> <%= post.description %></p>
+            <h4 class="times">Happy Hour Times: <span><%= post.times %></span></h4>
+            <h4 class="specials">Recommended Specials: <span><%= post.specials %></strong></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }) %>
 
-<!-- santa-monica-yacht-club-santa-monica-3 -->
+  </div>
+</div>
