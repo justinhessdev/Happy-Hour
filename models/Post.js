@@ -14,6 +14,9 @@ const
   postSchema.pre('findOne', function() {
     this.populate('_author')
   })
+  postSchema.pre('find', function() {
+    this.populate('_author')
+  })
 // middleware that runs before it returns results back to you
 // when we do pre frind one we do someting before it spites back results to you
 // you have reference model without it popolutaed it autom
