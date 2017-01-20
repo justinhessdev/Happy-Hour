@@ -5,9 +5,43 @@
   <h4>Address: <%= biz.location.address %></h4>
   <h4>City: <%= biz.location.city %></h4>
 </div>
-<div class="container">
 
+<div id="happy-hours-list">
+  <% posts.forEach((post) => {%>
+   <h1><%= post.description %></h1>
+   <% }) %>
 </div>
+
+<div class="container">
+    <textarea class="form-control" rows="2" name="description" placeholder="Add a description"></textarea>
+    <textarea class="form-control" rows="2" name="times" placeholder="Add a time"></textarea>
+    <textarea class="form-control" rows="2" name="specials" placeholder="Add specials"></textarea>
+    <textarea class="form-control" rows="2" name="neighborhood" placeholder="Add a neighborhood"></textarea>
+ <button id="happy-hour-button" class="btn btn-primary">Submit</button>
+</div>
+
+
+<script type="text/javascript">
+$('#happy-hour-button').on('click', function(evt) {
+  console.log('clickeddddd');
+  $.ajax({
+   url: '/posts',
+   method: 'POST',
+   contentType: 'application/json',
+   data: JSON.stringify({
+     business_id: "<%= biz.id %>",
+     description: $("textarea[name='description']").val(),
+     times: $("textarea[name='times']").val(),
+     specials: $("textarea[name='specials']").val(),
+     neighborhood: $("textarea[name='neighborhood']").val()})
+  }).done(function(post) {
+     console.log(post)
+    $('#happy-hours-list').append('<h1>' + post.description + '</h1>')
+  })
+})
+</script>
+
+
 <!-- test -->
 
 

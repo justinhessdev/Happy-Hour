@@ -22,8 +22,9 @@ const
     })
   .post((req, res) => {
     Post.create(req.body, (err, post) => {
-        res.json(post)})
+      res.json(post)
     })
+  })
 
   postRouter.route('/:id')
   .delete((req, res) => {

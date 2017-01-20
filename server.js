@@ -19,6 +19,7 @@ const
   _ = require('lodash'),
   postRoutes = require('./routes/posts.js'),
   port  = (process.env.PORT || 3000),
+  Post = require('./models/Post.js')
 
 
     // environment port
@@ -100,10 +101,12 @@ const
 
   app.get('/business/:id', (req, res) => {
     yelp.business(req.params.id, function(err, data){
-      if (err) return console.log(error);
-      console.log(data);
-      res.render('pages/business', {biz: data})
-    });
+      Post.find({business_id: req.params.id}, (err, posts) => {
+        if (err) return console.log(error);
+        console.log(data);
+        res.render('pages/business', {biz: data, posts})
+      })
+    })
   })
 
   app.use('/posts', postRoutes)
