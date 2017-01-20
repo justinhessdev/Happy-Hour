@@ -17,8 +17,8 @@ const
   n = require('nonce')(),
   qs = require('querystring'),
   _ = require('lodash'),
-  postRoutes = require('./routes/posts.js'),
   userRoutes = require('./routes/users.js'),
+  postRoutes = require('./routes/posts.js'),
   port  = (process.env.PORT || 3000),
   Post = require('./models/Post.js')
 
@@ -76,11 +76,16 @@ const
      res.render('pages/search', {businesses: businessesJustTheGoodStuff})
     })
   } else {
-
       res.redirect('/')
     }
   })
 
+  app.get('/posts/search', (req, res) => {
+    Post.find({neighborhood: req.query.neighborhood}, (err, posts) => {
+      console.log("this be the posts and stuff: " + posts)
+      res.render('posts/search', {posts})
+    })
+  })
 
   // // currentUser:
   app.use((req, res, next) => {
@@ -112,8 +117,6 @@ const
 
   app.use('/posts', postRoutes)
   app.use('/', userRoutes)
-
-
 
   app.listen(port, (err) => {
     console.log (err || "Server Running On Port " + port)
