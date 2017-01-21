@@ -1,8 +1,8 @@
-<h1> yayyyyy!!!</h1>
+<h1>Find a Happy Hour</h1>
 
 
 <div id="happy-hours-results">
-  <% posts.forEach((post) => {%>
+  <% filteredPosts.forEach((post) => { %>
    <h1><a href="/business/<%= post.business_id %>"><%= post.business_name %></a></h1>
    <% }) %>
 </div>

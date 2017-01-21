@@ -85,7 +85,8 @@ const
   app.get('/posts/search', (req, res) => {
     Post.find({neighborhood: req.query.neighborhood}, (err, posts) => {
       console.log("this be the posts and stuff: " + posts)
-      res.render('posts/search', {posts})
+      var filteredPosts = _.uniqBy(posts, 'business_name')
+      res.render('posts/search', {filteredPosts})
     })
   })
 
