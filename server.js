@@ -21,7 +21,8 @@ const
   userRoutes = require('./routes/users.js'),
   postRoutes = require('./routes/posts.js'),
   port  = (process.env.PORT || 3000),
-  Post = require('./models/Post.js')
+  Post = require('./models/Post.js'),
+  methodOverride = require('method-override')
 
 
     // environment port
@@ -41,6 +42,7 @@ const
 
   //middleware
   app = express()
+  app.use(methodOverride('_method'))
   app.set('view engine', 'ejs')
   app.use(ejsLayouts)
   app.use(express.static(__dirname + '/public'))
