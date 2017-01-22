@@ -8,19 +8,7 @@
 </div>
 </div>
 
-<!-- <div class="container">
- <div id="happy-hours-list"> -->
-
-
 <% if(loggedIn) { %>
-<!-- <div class="container">
-    <textarea class="form-control" rows="2" name="description" placeholder="Add a description"></textarea>
-    <textarea class="form-control" rows="2" name="times" placeholder="Add a time"></textarea>
-    <textarea class="form-control" rows="2" name="specials" placeholder="Add specials"></textarea>
-
- <button id="happy-hour-button" class="btn btn-primary">Submit</button>
-</div> -->
-
 <div class="container">
   <div style="margin-bottom:10px;">
   <!-- Trigger the modal with a button -->
@@ -60,11 +48,7 @@
             <p class="description"><span id='description'></span></p>
             <h4 class="times">Happy Hour Times: <span id="times"></span></h4>
             <h4 class="specials">Recommended Specials: <span id="specials"></span></h4>
-            <form class="deleteButton" action="/posts" method="POST">
-
-              <!-- <button class="btn btn-default" type="update">Edit</button> -->
-              <button id="deletePost" class="btn btn-default" type="submit">Delete</button>
-            </form>
+            <!-- Delete Button will be appended here -->
           </div>
         </div>
       </div>
@@ -89,13 +73,15 @@ $('#happy-hour-button').on('click', function(evt) {
 
    })
   }).done(function(post) {
-    appendReview(post._author.local.name, post.description, post.times, post.specials)
+    console.log(post);
+    appendReview(post._author.local.name, post.description, post.times, post.specials, post._id)
     $('#review-modal').modal('hide')
   })
 
-
 })
+
 function appendReview(name, description, times, specials, id) {
+  console.log("inside the appendReview method: post id is " + id)
   console.log("Cloning and prepending...")
   var $newReview = $('#review-template').clone()
   $newReview.attr('id', '')
@@ -103,13 +89,27 @@ function appendReview(name, description, times, specials, id) {
   $newReview.find('#description').text(description)
   $newReview.find('#times').text(times)
   $newReview.find('#specials').text(specials)
-  console.log(id)
+  var deleteButton = $('<button id="'+id+'" type="button">Delete</button>')
+  deleteButton.on('click', function() {
+    console.log('delete button clicked');
+    buttonId = $(this).attr('id');
+    $.ajax({
+    method:'DELETE',
+    url: '/posts/' + buttonId
+    }).done(function(data) {
+      console.log(data)
+      var delButton = $('#' + buttonId)
+      delButton.parent().remove()
+    })
+  })
+  $newReview.append(deleteButton)
   console.log($newReview)
   $('.happy-hours-list').prepend($newReview)
 }
 
 <% posts.reverse().forEach((post) => { %>
-  appendReview("<%= post._author.local.name %>", "<%= post.description %>", "<%= post.times %>", "<%= post.specials %>")
+  console.log("inside the reverse post method: the id of this post is <%= post._id %>");
+  appendReview("<%= post._author.local.name %>", "<%= post.description %>", "<%= post.times %>", "<%= post.specials %>", "<%= post._id %>")
 
 <% }) %>
 
