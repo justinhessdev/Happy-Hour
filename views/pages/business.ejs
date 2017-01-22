@@ -1,10 +1,11 @@
-
-<h1>HappyHour show page</h1>
+<div style="color:white">
+<h1><%= biz.name %></h1>
 <div class="container">
   <h3>Name: <%= biz.name %></h3>
   <h4>Rating: <%= biz.rating %></h4>
   <h4>Address: <%= biz.location.address %></h4>
   <h4>City: <%= biz.location.city %></h4>
+</div>
 </div>
 
 <!-- <div class="container">
@@ -59,6 +60,11 @@
             <p class="description"><span id='description'></span></p>
             <h4 class="times">Happy Hour Times: <span id="times"></span></h4>
             <h4 class="specials">Recommended Specials: <span id="specials"></span></h4>
+            <form class="deleteButton" action="/posts" method="POST">
+
+              <!-- <button class="btn btn-default" type="update">Edit</button> -->
+              <button id="deletePost" class="btn btn-default" type="submit">Delete</button>
+            </form>
           </div>
         </div>
       </div>
@@ -89,9 +95,8 @@ $('#happy-hour-button').on('click', function(evt) {
   })
 
 
-
 })
-function appendReview(name, description, times, specials) {
+function appendReview(name, description, times, specials, id) {
   console.log("Cloning and prepending...")
   var $newReview = $('#review-template').clone()
   $newReview.attr('id', '')
@@ -99,12 +104,13 @@ function appendReview(name, description, times, specials) {
   $newReview.find('#description').text(description)
   $newReview.find('#times').text(times)
   $newReview.find('#specials').text(specials)
+  console.log(id)
   console.log($newReview)
   $('.happy-hours-list').prepend($newReview)
 }
 
 <% posts.reverse().forEach((post) => {%>
-  appendReview("<%= post._author.local.name %>", "<%= post.description %>", "<%= post.times %>", "<%= post.specials %>")
+  appendReview("<%= post._author.local.name %>", "<%= post.description %>", "<%= post.times %>", "<%= post.specials %>", "<%= post._id %>")
 <% }) %>
 
 </script>
