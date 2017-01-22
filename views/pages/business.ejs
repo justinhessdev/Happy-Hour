@@ -66,7 +66,6 @@
   </div>
 </div>
 
-<% if(loggedIn) { %>
 <script type="text/javascript">
 $('#happy-hour-button').on('click', function(evt) {
   console.log('clickeddddd');
@@ -103,9 +102,8 @@ function appendReview(name, description, times, specials) {
   $('.happy-hours-list').prepend($newReview)
 }
 
-<% posts.reverse().forEach((post) => {%>
+<% posts.reverse().forEach((post) => { %>
   appendReview("<%= post._author.local.name %>", "<%= post.description %>", "<%= post.times %>", "<%= post.specials %>")
 <% }) %>
 
 </script>
-<% } %>
