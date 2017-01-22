@@ -28,10 +28,9 @@ const
 
   postRouter.route('/:id')
   .delete((req, res) => {
-    Post.findByIdAndRemove(post._id , (err,post) =>{
-      console.log(post)
-      if (err) throw err
-      res.redirect('/:id')
+    Post.findByIdAndRemove(req.params.id , (err) =>{
+      if (err) console.log(err)
+      res.json({message: "Todo deleted... 😥"})
     })
-    })
+  })
 module.exports = postRouter
