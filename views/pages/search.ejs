@@ -1,12 +1,12 @@
 
-<h1>Search Page</h1>
+<h1 style="color:white; font-family:serif">Please Check Out These Awesome Places</h1>
 <div class="container">
   <ul>
     <% businesses.forEach((p) => { %>
 
       <%console.log(p.id)%>
-        <li><a href="/business/<%= p.id %>"><%= p.name %></a> </li>
-        
+        <div class="yelp-list"><a href="/business/<%= p.id %>"><%= p.name %></a> </div>
+
     <% }) %>
   </ul>
 </div>
