@@ -1,9 +1,9 @@
 <div style="color:white">
 <h1><%= biz.name %></h1>
 <div class="container">
-  <h3>Name: <%= biz.name %></h3>
+  <h3>Name: <%- biz.name %></h3>
   <h4>Rating: <%= biz.rating %></h4>
-  <h4>Address: <%= biz.location.address %></h4>
+  <h4>Address: <%- biz.location.address %></h4>
   <h4>City: <%= biz.location.city %></h4>
 </div>
 </div>
@@ -91,7 +91,7 @@ $('#happy-hour-button').on('click', function(evt) {
    method: 'POST',
    contentType: 'application/json',
    data: JSON.stringify({
-     business_name: "<%= biz.name %>",
+     business_name: "<%- biz.name %>",
      business_id: "<%= biz.id %>",
      description: $("textarea[name='description']").val(),
      times: $("textarea[name='times']").val(),
@@ -145,7 +145,7 @@ function appendReview(name, authorID, description, times, specials, id) {
             url: '/posts/' + id,
             contentType: 'application/json',
             data: JSON.stringify({
-              business_name: "<%= biz.name %>",
+              business_name: "<%- biz.name %>",
               business_id: "<%= biz.id %>",
               description:   $('#updateDescription').val(),
               times: $('#updateTimes').val(),
@@ -173,7 +173,7 @@ function appendReview(name, authorID, description, times, specials, id) {
 
 <% posts.reverse().forEach((post) => { %>
   console.log("inside the reverse post method: the id of this post is <%= post._id %>");
-  appendReview("<%= post._author.local.name %>", '<%= post._author._id %>' , "<%= post.description %>", "<%= post.times %>", "<%= post.specials %>", "<%= post._id %>")
+  appendReview("<%= post._author.local.name %>", '<%= post._author._id %>' , "<%- post.description %>", "<%- post.times %>", "<%- post.specials %>", "<%= post._id %>")
 
 
 <% }) %>

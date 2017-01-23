@@ -3,6 +3,6 @@
 
 <div id="happy-hours-results">
   <% filteredPosts.forEach((post) => { %>
-   <h1 style="font-family:serif"><a href="/business/<%= post.business_id %>"><%= post.business_name %></a></h1>
+   <h1 style="font-family:serif"><a href="/business/<%= post.business_id %>"><%- post.business_name %></a></h1>
   <% }) %>
 </div>

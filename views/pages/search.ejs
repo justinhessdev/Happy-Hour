@@ -5,7 +5,7 @@
     <% businesses.forEach((p) => { %>
 
       <%console.log(p.id)%>
-        <div class="yelp-list"><a href="/business/<%= p.id %>"><%= p.name %></a> </div>
+        <div class="yelp-list"><a href="/business/<%= p.id %>"><%- p.name %></a> </div>
 
     <% }) %>
   </ul>
