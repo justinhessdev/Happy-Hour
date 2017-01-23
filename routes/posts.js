@@ -30,7 +30,7 @@ const
   .delete((req, res) => {
     Post.findByIdAndRemove(req.params.id , (err) =>{
       if (err) console.log(err)
-      res.json({message: "Todo deleted... 😥"})
+      res.json({message: "deleted"})
     })
   })
 module.exports = postRouter

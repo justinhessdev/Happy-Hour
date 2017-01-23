@@ -9,6 +9,8 @@
 </div>
 
 <% if(loggedIn) { %>
+
+
 <div class="container">
   <div style="margin-bottom:10px;">
   <!-- Trigger the modal with a button -->
@@ -29,6 +31,7 @@
         </div>
         <div class="modal-footer">
           <button id="happy-hour-button" class="btn btn-primary">Submit</button>
+
         </div>
       </div>
     </div>
@@ -57,6 +60,7 @@
 </div>
 
 <script type="text/javascript">
+
 $('#happy-hour-button').on('click', function(evt) {
   console.log('clickeddddd');
   $.ajax({
@@ -73,14 +77,13 @@ $('#happy-hour-button').on('click', function(evt) {
 
    })
   }).done(function(post) {
-    console.log(post);
-    appendReview(post._author.local.name, post.description, post.times, post.specials, post._id)
+    appendReview(post._author.local.name, post._author.local.id, post.description, post.times, post.specials, post._id)
     $('#review-modal').modal('hide')
   })
 
 })
 
-function appendReview(name, description, times, specials, id) {
+function appendReview(name, authorID, description, times, specials, id) {
   console.log("inside the appendReview method: post id is " + id)
   console.log("Cloning and prepending...")
   var $newReview = $('#review-template').clone()
@@ -89,27 +92,31 @@ function appendReview(name, description, times, specials, id) {
   $newReview.find('#description').text(description)
   $newReview.find('#times').text(times)
   $newReview.find('#specials').text(specials)
-  var deleteButton = $('<button id="'+id+'" type="button">Delete</button>')
-  deleteButton.on('click', function() {
-    console.log('delete button clicked');
-    buttonId = $(this).attr('id');
-    $.ajax({
-    method:'DELETE',
-    url: '/posts/' + buttonId
-    }).done(function(data) {
-      console.log(data)
-      var delButton = $('#' + buttonId)
-      delButton.parent().remove()
+  console.log("author ID is: " + authorID)
+  var logViewer = ("<%= currentUser.id %>")
+  if (logViewer == authorID){
+    var deleteButton = $('<button id="'+id+'" type="button">Delete</button>')
+    deleteButton.on('click', function() {
+      console.log('delete button clicked');
+      buttonId = $(this).attr('id');
+      $.ajax({
+      method:'DELETE',
+      url: '/posts/' + buttonId
+      }).done(function(data) {
+        console.log(data)
+        var delButton = $('#' + buttonId)
+        delButton.parent().remove()
+      })
     })
-  })
-  $newReview.append(deleteButton)
-  console.log($newReview)
-  $('.happy-hours-list').prepend($newReview)
-}
+  }
+    $newReview.append(deleteButton)
+    console.log($newReview)
+    $('.happy-hours-list').prepend($newReview)
+    }
 
 <% posts.reverse().forEach((post) => { %>
   console.log("inside the reverse post method: the id of this post is <%= post._id %>");
-  appendReview("<%= post._author.local.name %>", "<%= post.description %>", "<%= post.times %>", "<%= post.specials %>", "<%= post._id %>")
+  appendReview("<%= post._author.local.name %>", '<%= post._author._id %>' , "<%= post.description %>", "<%= post.times %>", "<%= post.specials %>", "<%= post._id %>")
 
 <% }) %>
 
