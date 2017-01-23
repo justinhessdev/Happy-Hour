@@ -116,54 +116,57 @@ function appendReview(name, authorID, description, times, specials, id) {
   $newReview.find('#times').text(times)
   $newReview.find('#specials').text(specials)
   console.log("author ID is: " + authorID)
-  var logViewer = ("<%= currentUser.id %>")
-  if (logViewer == authorID){
-    var deleteButton = $('<button id="'+id+'" type="button">Delete</button>')
-    deleteButton.on('click', function() {
-      console.log('delete button clicked');
-      buttonId = $(this).attr('id');
-      $.ajax({
-      method:'DELETE',
-      url: '/posts/' + buttonId
-      }).done(function(data) {
-        console.log(data)
-        var delButton = $('#' + buttonId)
-        delButton.parent().remove()
-      })
-    })
-
-    var editButton = $('<button class="'+id+'" type="button" data-toggle="modal" data-target="#update-modal">Edit</button>')
-      $('#updateDescription').val(description)
-      $('#updateTimes').val(times)
-      $('#updateSpecials').val(specials)
-      $('#happy-hour-update').on('click', function() {
-        console.log("clicked update button");
+  <% if(loggedIn) { %>
+    var logViewer = ("<%= currentUser.id %>")
+    if (logViewer == authorID){
+      var deleteButton = $('<button id="'+id+'" type="button" style="color:black">Delete</button>')
+      deleteButton.on('click', function() {
+        console.log('delete button clicked');
+        buttonId = $(this).attr('id');
         $.ajax({
-          method: 'PATCH',
-          url: '/posts/' + id,
-          contentType: 'application/json',
-          data: JSON.stringify({
-            business_name: "<%= biz.name %>",
-            business_id: "<%= biz.id %>",
-            description:   $('#updateDescription').val(),
-            times: $('#updateTimes').val(),
-            specials: $('#updateSpecials').val(),
-            neighborhood: "<%= biz.location.city%>"
-          })
+        method:'DELETE',
+        url: '/posts/' + buttonId
         }).done(function(data) {
-            console.log(data)
-            $('#update-modal').modal('hide')
-            $newReview.find('#description').text(data.description)
-            $newReview.find('#times').text(data.times)
-            $newReview.find('#specials').text(data.specials)
-          })
+          console.log(data)
+          var delButton = $('#' + buttonId)
+          delButton.parent().remove()
         })
+      })
+
+      var editButton = $('<button class="'+id+'" type="button" style="color:black" data-toggle="modal" data-target="#update-modal">Edit</button>')
+        $('#updateDescription').val(description)
+        $('#updateTimes').val(times)
+        $('#updateSpecials').val(specials)
+
+        $('#happy-hour-update').on('click', function() {
+          console.log("clicked update button");
+          $.ajax({
+            method: 'PATCH',
+            url: '/posts/' + id,
+            contentType: 'application/json',
+            data: JSON.stringify({
+              business_name: "<%= biz.name %>",
+              business_id: "<%= biz.id %>",
+              description:   $('#updateDescription').val(),
+              times: $('#updateTimes').val(),
+              specials: $('#updateSpecials').val(),
+              neighborhood: "<%= biz.location.city%>"
+            })
+          }).done(function(data) {
+              console.log(data)
+              $('#update-modal').modal('hide')
+              $newReview.find('#description').text(data.description)
+              $newReview.find('#times').text(data.times)
+              $newReview.find('#specials').text(data.specials)
+            })
+          })
 
     $newReview.append(deleteButton)
     $newReview.append(editButton)
 
+    }
+  <% } %>
 
-  }
   $('.happy-hours-list').prepend($newReview)
 }
 
