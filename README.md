@@ -6,7 +6,7 @@ https://blooming-tor-87283.herokuapp.com
 * What you get is not only the name and location of a restaurant or a bar, you also have an opportunity to enjoy delicious food and great drinks on discounted prices. 
 
 
-![](https://raw.githubusercontent.com/nadia28/project3/master/public/images/screen.png)
+![](Happy-Hour/master/public/images/screen.png)
 
 
 ##User Stories:
@@ -33,7 +33,7 @@ https://blooming-tor-87283.herokuapp.com
 * mLab DB
 * Heroku platform
 
-![](https://raw.githubusercontent.com/nadia28/project3/master/public/images/sketch.jpg)
+![](Happy-Hour/master/public/images/sketch.jpg)
 
 ##Presented by:
 * Sean Lewis
