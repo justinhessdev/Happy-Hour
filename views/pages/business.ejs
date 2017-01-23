@@ -37,6 +37,29 @@
     </div>
   </div>
 </div>
+
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="update-modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Update Review</h4>
+        </div>
+        <div class="modal-body" id="happy-hours-update">
+          <textarea class="form-control" id="updateDescription" rows="2" name="description" placeholder="Add a description"></textarea>
+          <textarea class="form-control" id="updateTimes" rows="2" name="times" placeholder="Add a time"></textarea>
+          <textarea class="form-control" id="updateSpecials" rows="2" name="specials" placeholder="Add specials"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button id="happy-hour-update" class="btn btn-primary">Update</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <% } else { %>
   <h3>You must be <a href="/login">logged in</a> to write a review.</h3>
 <% } %>
@@ -108,11 +131,41 @@ function appendReview(name, authorID, description, times, specials, id) {
         delButton.parent().remove()
       })
     })
-  }
+
+    var editButton = $('<button class="'+id+'" type="button" data-toggle="modal" data-target="#update-modal">Edit</button>')
+      $('#updateDescription').val(description)
+      $('#updateTimes').val(times)
+      $('#updateSpecials').val(specials)
+      $('#happy-hour-update').on('click', function() {
+        console.log("clicked update button");
+        $.ajax({
+          method: 'PATCH',
+          url: '/posts/' + id,
+          contentType: 'application/json',
+          data: JSON.stringify({
+            business_name: "<%= biz.name %>",
+            business_id: "<%= biz.id %>",
+            description:   $('#updateDescription').val(),
+            times: $('#updateTimes').val(),
+            specials: $('#updateSpecials').val(),
+            neighborhood: "<%= biz.location.city%>"
+          })
+        }).done(function(data) {
+            console.log(data)
+            $('#update-modal').modal('hide')
+            $newReview.find('#description').text(data.description)
+            $newReview.find('#times').text(data.times)
+            $newReview.find('#specials').text(data.specials)
+          })
+        })
+
     $newReview.append(deleteButton)
+    $newReview.append(editButton)
     console.log($newReview)
     $('.happy-hours-list').prepend($newReview)
     }
+}
+
 
 <% posts.reverse().forEach((post) => { %>
   console.log("inside the reverse post method: the id of this post is <%= post._id %>");
