@@ -33,4 +33,10 @@ const
       res.json({message: "deleted"})
     })
   })
+  .patch((req, res) => {
+      Post.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, post) => {
+      // respond here
+      res.json(post)
+    })
+  })
 module.exports = postRouter
