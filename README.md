@@ -33,7 +33,7 @@ https://blooming-tor-87283.herokuapp.com
 * mLab DB
 * Heroku platform
 
-![](https://raw.githubusercontent.com/nadia28/project3/master/public/images/sketch.jpg)
+![](/public/images/sketch.jpg)
 
 ##Presented by:
 * Sean Lewis
