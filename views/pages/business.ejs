@@ -161,15 +161,17 @@ function appendReview(name, authorID, description, times, specials, id) {
 
     $newReview.append(deleteButton)
     $newReview.append(editButton)
-    console.log($newReview)
-    $('.happy-hours-list').prepend($newReview)
-    }
+
+
+  }
+  $('.happy-hours-list').prepend($newReview)
 }
 
 
 <% posts.reverse().forEach((post) => { %>
   console.log("inside the reverse post method: the id of this post is <%= post._id %>");
   appendReview("<%= post._author.local.name %>", '<%= post._author._id %>' , "<%= post.description %>", "<%= post.times %>", "<%= post.specials %>", "<%= post._id %>")
+
 
 <% }) %>
 
